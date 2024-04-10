@@ -1,15 +1,11 @@
-const execa = require('execa')
-
-async function osascript (cmd) {
-  return (await execa('osascript', ['-e', cmd])).stdout
-}
+const osascript = require("./darwin_osahelper.js").osascript;
 
 exports.getVolume = async function getVolume () {
   return parseInt(await osascript('output volume of (get volume settings)'), 10)
 }
 
 exports.setVolume = async function setVolume (val) {
-  await osascript('set volume output volume ' + val)
+  await osascript('set volume output volume (item 1 of argv)', [val])
 }
 
 exports.getMuted = async function getMuted () {
